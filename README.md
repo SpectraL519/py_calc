@@ -1,2 +1,8 @@
 # py_calc
-Simple python terminal calculator
+A very simple python terminal calculator
+
+<br />
+
+The calculator is capable of computing any binary exprression out of: `+`, `-`, `*`, `/`
+
+Expected expression format: `<number> <operation_sign> <number>`
