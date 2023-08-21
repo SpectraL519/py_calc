@@ -9,7 +9,8 @@ def main():
             raise SystemExit
         
         result = calculator.parse_expr(expression)
-        if result: print(result)
+        if result is not None: 
+            print(result)
 
 
 if __name__ == "__main__":

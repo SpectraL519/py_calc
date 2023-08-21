@@ -23,14 +23,34 @@ class calculator:
             raise ValueError("divider cannot be equal to 0")
         return x / y
 
+    @staticmethod
+    def power(x: numerical, y: numerical) -> numerical:
+        return x ** y
+    
+    @staticmethod
+    def bitwise_and(x: numerical, y: numerical) -> numerical:
+        return x & y
+    
+    @staticmethod
+    def bitwise_or(x: numerical, y: numerical) -> numerical:
+        return x | y
+    
+    @staticmethod
+    def bitwise_xor(x: numerical, y: numerical) -> numerical:
+        return x ^ y
 
-    expr_regex = r'^([-]?\d+(\.\d+)?)\s*([+\-*/])\s*([-]?\d+(\.\d+)?)$'
-    operations = {
-        '+': add.__get__(object),
-        '-': subtract.__get__(object),
-        '*': multiply.__get__(object),
-        '/': devide.__get__(object)
+
+    _operations = {
+        '+': add.__func__,
+        '-': subtract.__func__,
+        '*': multiply.__func__,
+        '/': devide.__func__,
+        '**': power.__func__,
+        '&': bitwise_and.__func__,
+        '|': bitwise_or.__func__,
+        '^': bitwise_xor.__func__
     }
+    _expr_regex = r"^([-]?\d+(\.\d+)?)\s*([+\-*/&\|\^]|\*\*)\s*([-]?\d+(\.\d+)?)$"
 
 
     @staticmethod
@@ -45,7 +65,7 @@ class calculator:
 
     @staticmethod
     def parse_expr(expression: str) -> numerical | None:
-        match = re.match(calculator.expr_regex, expression)
+        match = re.match(calculator._expr_regex, expression)
         if not match:
             return "Error: invalid expression!"
 
@@ -54,7 +74,7 @@ class calculator:
         y = match.group(4)
 
         try:
-            result = calculator.operations[op](
+            result = calculator._operations[op](
                 calculator.parse_num(x), 
                 calculator.parse_num(y)
             )
